@@ -1,0 +1,56 @@
+// Sequential Search
+// Projeto e Análise de Algoritmos, 2023
+// Mestrado Ciências da Computação, UFOP
+// Leonardo Macedo Freire
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+int SequentialSearch(vector<int>, int);
+
+int main()
+{
+    vector<int> numbers;
+    int lengthNumbers;
+    cout<<"Sequential Search\nLeonardo Macedo Freire"<<endl;
+    cout<<"-----------------------------------\n"<<endl;
+    cout<<"Forneca a quantidade de numeros:"<<endl;
+    cin >> lengthNumbers;
+
+    int myNumber;
+    cout<<"Forneca os numeros:"<<endl;
+    for (int i=0;i<lengthNumbers;i++){
+        cin>> myNumber;
+        numbers.push_back(myNumber);
+    }
+
+    int key;
+    cout<<"Forneca a chave:"<<endl;
+    cin>>key;
+
+    int position = SequentialSearch(numbers, key);
+
+    if(position==-1)
+        cout<<"A chave nao existe na lista de numeros"<<endl;
+    else
+        cout<<"A posicao da chave na lista eh: "<<position<<endl;
+
+    return 0;
+}
+
+int SequentialSearch(vector<int> numbers, int key){
+
+    vector<int> numbersCopy(numbers);
+    numbersCopy.push_back(key);
+
+    int i=0;
+    while(numbersCopy[i]!=key)
+        i++;
+
+    if(i<numbersCopy.size()-1)
+        return i;
+    else
+        return -1;
+}
