@@ -1,0 +1,129 @@
+// BFS and DFS
+// Projeto e Análise de Algoritmos, 2023
+// Mestrado Ciências da Computação, UFOP
+// Leonardo Macedo Freire
+#include <iostream>
+#include <vector>
+#include <map>
+#include<stack>
+#include <queue>
+
+using namespace std;
+
+vector<int> DFS(map<int,vector<int>>,int,int);
+
+vector<int> BFS(map<int,vector<int>>,int,int);
+
+int main()
+{
+    //lista de adjacência
+    map<int,vector<int>> graph;
+    int lengthVertices;
+    int lengthEdges;
+    cout<<"DFS and BFS\nLeonardo Macedo Freire"<<endl;
+    cout<<"-----------------------------------\n"<<endl;
+    cout<<"Forneca a quantidade de vertices:"<<endl;
+    cin >> lengthVertices;
+    cout<<"Forneca a quantidade de Arestas:"<<endl;
+    cin >> lengthEdges;
+    cout<<"Forneca os pares de vertices das arestas:"<<endl;
+    int vertice1, vertice2;
+    for (int i=0;i<lengthEdges;i++){
+        cout<<"Aresta: "<<i<<endl;
+        cin>> vertice1;
+        cin>> vertice2;
+        graph[vertice1].push_back(vertice2);
+    cout<<"---------------------------"<<endl;
+    }
+    int start;
+    cout<<"Forneca o vertice inicial para busca:"<<endl;
+    cin>>start;
+    int goal;
+    cout<<"Forneca o vertice objetivo da busca:"<<endl;
+    cin>>goal;
+
+   cout<<"------------Lista de adjancencias do grafo--------------------------"<<endl;
+   for(int i=0;i<graph.size();i++){
+    cout<<i<<" => ";
+    for(int j=0;j<graph[i].size();j++){
+        cout<<graph[i][j]<<" ";
+    }
+    cout<<"\n";
+   }
+   cout<<"------------DFS--------------------------"<<endl;
+   vector<int> pathDFS= DFS(graph,start,goal);
+   cout<<"----------o caminho eh:----------\n<";
+   for(int i=0;i<pathDFS.size();i++){
+    cout<<pathDFS[i]<<",";
+   }
+   cout<<">\n";
+
+    cout<<"------------BFS--------------------------"<<endl;
+   vector<int> pathBFS= BFS(graph,start,goal);
+   cout<<"----------o caminho eh:----------\n<";
+   for(int i=0;i<pathBFS.size();i++){
+    cout<<pathBFS[i]<<",";
+   }
+   cout<<">\n";
+    return 0;
+}
+
+
+vector<int> DFS(map<int,vector<int>> graph,int start,int goal){
+    //LIFO => DFS
+    stack<vector<int>> frontier;
+    vector<int> path_initial;
+    path_initial.push_back(start);
+    frontier.push(path_initial);
+    while(frontier.size()){
+        vector<int> path(frontier.top());
+        cout<<"--------caminho a ser explorado:---------------"<<endl;
+        for(int i=0;i<path.size();i++)
+            cout<<path[i]<<" ";
+        cout<<endl;
+        frontier.pop();
+        if( path.back()==goal)
+            return path;
+        else{
+            int lastVertice= path.back();
+            cout<<"Vertice do caminho a ser explorado: "<<lastVertice<<endl;
+            for(int i=0;i<graph[lastVertice].size();i++){
+                vector<int> path_extend(path);
+                path_extend.push_back(graph[lastVertice][i]);
+                frontier.push(path_extend);
+            }
+        }
+    };
+    vector<int> nonpath(1,-1);
+    return nonpath;
+};
+
+
+vector<int> BFS(map<int,vector<int>> graph,int start,int goal){
+    //FIFO => BFS
+    queue<vector<int>> frontier;
+    vector<int> path_initial;
+    path_initial.push_back(start);
+    frontier.push(path_initial);
+    while(frontier.size()){
+        vector<int> path(frontier.front());
+        cout<<"--------caminho a ser explorado:---------------"<<endl;
+        for(int i=0;i<path.size();i++)
+            cout<<path[i]<<" ";
+        cout<<endl;
+        frontier.pop();
+        if( path.back()==goal)
+            return path;
+        else{
+            int lastVertice= path.back();
+            cout<<"Vertice do caminho a ser explorado: "<<lastVertice<<endl;
+            for(int i=0;i<graph[lastVertice].size();i++){
+                vector<int> path_extend(path);
+                path_extend.push_back(graph[lastVertice][i]);
+                frontier.push(path_extend);
+            }
+        }
+    };
+    vector<int> nonpath(1,-1);
+    return nonpath;
+};
