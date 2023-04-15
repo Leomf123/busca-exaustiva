@@ -1,0 +1,55 @@
+// Select Sort
+// Projeto e Análise de Algoritmos, 2023
+// Mestrado Ciências da Computação, UFOP
+//Leonardo Macedo Freire
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+vector<int> SelectionSort(vector<int> numbers);
+
+int main()
+{
+    vector<int> numbers;
+    int lengthNumbers;
+    cout<<"Select Sort\nLeonardo Macedo Freire"<<endl;
+    cout<<"-----------------------------------\n"<<endl;
+    cout<<"Forneca a quantidade de numeros:"<<endl;
+    cin >> lengthNumbers;
+
+    int myNumber;
+    cout<<"Forneca os numeros:"<<endl;
+    for (int i=0;i<lengthNumbers;i++){
+        cin>> myNumber;
+        numbers.push_back(myNumber);
+    }
+
+    vector<int> numbers2 = SelectionSort(numbers);
+
+    cout<<"Os numeros ordenados:"<<endl;
+    for (int i=0;i<numbers2.size();i++){
+       cout<< numbers2[i] <<endl;
+    }
+
+    return 0;
+}
+
+vector<int> SelectionSort(vector<int> numbers){
+    vector<int> sortNumbers(numbers);
+
+    int minimum;
+    for(int i=0;i<sortNumbers.size()-1;i++){
+
+        minimum=i;
+        for(int j=i+1;j<sortNumbers.size();j++)
+            if(sortNumbers[j]<sortNumbers[minimum])
+              minimum=j;
+
+        int number= sortNumbers[i];
+        sortNumbers[i]=sortNumbers[minimum];
+        sortNumbers[minimum]=number;
+    }
+    return sortNumbers;
+}
